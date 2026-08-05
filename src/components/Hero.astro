@@ -1,0 +1,31 @@
+---
+import LogosCarousel from './LogosCarousel.astro';
+---
+
+<section class="hero" id="inicio">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline preload="metadata" aria-hidden="true"
+           poster="/assets/imagenes_optimizadas/carga_maquinaria/img5.jpeg.jpg">
+      <source src="/assets/video/video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>
+      MOVER LO<br>
+      QUE OTROS<br>
+      <span class="red">NO PUEDEN</span>
+    </h1>
+    <p class="hero-desc">
+      Desde 2014 especializados en transporte de carga pesada, maquinaria, contenedores marítimos y equipos especiales.<br>
+      Flota propia con GPS y seguros de carga incluidos.
+    </p>
+    <div class="hero-btns">
+      <a href="#contacto" class="btn-red">Solicitar Cotización</a>
+      <a href="#galeria"  class="btn-outline">Ver Operaciones</a>
+    </div>
+  </div>
+
+  <!-- LOGOS CLIENTES — marquee a lo ancho del hero -->
+  <LogosCarousel />
+</section>

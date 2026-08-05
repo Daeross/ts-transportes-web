@@ -1,0 +1,17 @@
+<div class="op-overlay" id="opOverlay" onclick="closeOpPanel(event)" role="dialog" aria-modal="true" aria-label="Visor de operaciones">
+  <div class="op-panel" id="opPanel">
+    <button class="op-close" id="opCloseBtn" aria-label="Cerrar">✕</button>
+    <div class="op-header">
+      <div class="op-cat-title" id="opCatTitle"></div>
+    </div>
+    <div class="op-imgwrap">
+      <button class="op-prev" onclick="opNav(-1)" aria-label="Anterior">‹</button>
+      <img id="opImg" src="" alt="">
+      <button class="op-next" onclick="opNav(1)" aria-label="Siguiente">›</button>
+    </div>
+    <div class="op-footer">
+      <div class="op-counter" id="opCounter"></div>
+      <div class="op-dots" id="opDots"></div>
+    </div>
+  </div>
+</div>

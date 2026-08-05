@@ -1,0 +1,20 @@
+# Cabeceras HTTP reales (Cloudflare Pages y Netlify leen este archivo).
+# Sustituyen a las <meta http-equiv> del sitio antiguo: se aplican a todos los
+# recursos, no solo al documento HTML, y no se pueden ignorar.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src https://fonts.gstatic.com https://unpkg.com; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; frame-ancestors 'none'
+
+# Recursos con hash en el nombre: se pueden cachear para siempre.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imágenes y vídeo: el nombre no lleva hash, así que un día de caché.
+# Si se reemplaza una imagen, se ve el cambio al día siguiente como máximo.
+/assets/*
+  Cache-Control: public, max-age=86400

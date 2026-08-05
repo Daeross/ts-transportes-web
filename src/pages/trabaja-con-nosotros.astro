@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import '../styles/maneja.css';
+---
+
+<BaseLayout
+  title="Trabaja con Nosotros | Conductores TSA Logística y Transporte"
+  description="Postula como conductor profesional en TSA Logística y Transporte. Flota moderna con GPS, rutas en todo Chile y una empresa seria que valora tu experiencia al volante."
+>
+  <header>
+  <div class="top-bar" aria-hidden="true"></div>
+
+  <nav aria-label="Navegación">
+    <a class="nav-logo" href="/" aria-label="Volver al inicio de TSA Logística">
+      <img src="/assets/imagenes_optimizadas/logo/logoTSPNG.png.png" alt="Logotipo de TSA Logística y Transporte" width="110" height="44" loading="eager" decoding="async">
+    </a>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema claro u oscuro" aria-pressed="false">
+        <i class="ph ph-moon" aria-hidden="true"></i>
+      </button>
+      <a href="/" class="nav-back">
+        <i class="ph ph-arrow-left" aria-hidden="true"></i> Volver al sitio
+      </a>
+    </div>
+  </nav>
+  </header>
+
+  <main>
+  <div class="hero">
+    <div class="hero-tag">Únete al equipo</div>
+    <h1>MANEJA PARA<br><span>TSA LOGÍSTICA</span></h1>
+    <p>¿Tienes experiencia al volante y buscas una empresa seria, con flota moderna y GPS? Completa el formulario y un representante se contactará contigo a la brevedad.</p>
+  </div>
+
+  <div class="form-section">
+
+    <div class="requisitos">
+      <h3>Requisitos mínimos</h3>
+      <ul>
+        <li><i class="ph ph-check-circle"></i> Licencia profesional clase A2, A3 o A4 vigente</li>
+        <li><i class="ph ph-check-circle"></i> Experiencia mínima de 2 años en conducción de camiones</li>
+        <li><i class="ph ph-check-circle"></i> Sin anotaciones graves en hoja de vida del conductor</li>
+        <li><i class="ph ph-check-circle"></i> Disponibilidad para viajes de larga distancia</li>
+        <li><i class="ph ph-check-circle"></i> Mayores de 25 años</li>
+      </ul>
+    </div>
+
+    <h2>Completa tus datos</h2>
+
+    <form id="empleoForm" novalidate>
+      <div class="fgrid">
+        <div class="fg" id="fg-nombre">
+          <label for="e-nombre">Nombre completo *</label>
+          <input type="text" id="e-nombre" name="nombre" placeholder="Tu nombre completo" maxlength="120" autocomplete="name">
+          <span class="field-error">Ingresa tu nombre completo.</span>
+        </div>
+        <div class="fg" id="fg-rut">
+          <label for="e-rut">RUT *</label>
+          <input type="text" id="e-rut" name="rut" placeholder="12.345.678-9" maxlength="12">
+          <span class="field-error">Ingresa un RUT válido.</span>
+        </div>
+        <div class="fg" id="fg-telefono">
+          <label for="e-telefono">Teléfono *</label>
+          <input type="tel" id="e-telefono" name="telefono" placeholder="+56 9 ..." maxlength="20" autocomplete="tel">
+          <span class="field-error">Ingresa un teléfono válido.</span>
+        </div>
+        <div class="fg" id="fg-correo">
+          <label for="e-correo">Correo electrónico *</label>
+          <input type="email" id="e-correo" name="correo" placeholder="tu@correo.cl" maxlength="120" autocomplete="email">
+          <span class="field-error">Ingresa un correo válido.</span>
+        </div>
+        <div class="fg" id="fg-licencia">
+          <label for="e-licencia">Clase de licencia *</label>
+          <select id="e-licencia" name="licencia">
+            <option value="">Selecciona tu licencia</option>
+            <option value="A2">A2 — Camión simple</option>
+            <option value="A3">A3 — Camión con acoplado</option>
+            <option value="A4">A4 — Camión articulado (tracto)</option>
+            <option value="otra">Otra</option>
+          </select>
+          <span class="field-error">Selecciona tu tipo de licencia.</span>
+        </div>
+        <div class="fg" id="fg-experiencia">
+          <label for="e-experiencia">Años de experiencia *</label>
+          <select id="e-experiencia" name="experiencia">
+            <option value="">Selecciona</option>
+            <option value="2-5">2 a 5 años</option>
+            <option value="5-10">5 a 10 años</option>
+            <option value="10+">Más de 10 años</option>
+          </select>
+          <span class="field-error">Selecciona tu experiencia.</span>
+        </div>
+        <div class="fg full">
+          <label for="e-tipo">Tipo de carga con experiencia</label>
+          <select id="e-tipo" name="tipo">
+            <option value="">Selecciona (opcional)</option>
+            <option value="plana">Rampla plana</option>
+            <option value="cama-baja">Cama baja</option>
+            <option value="sider">Síder / carga cerrada</option>
+            <option value="contenedor">Contenedores</option>
+            <option value="varios">Varios tipos</option>
+          </select>
+        </div>
+        <div class="fg full">
+          <label for="e-mensaje">Cuéntanos algo sobre ti</label>
+          <textarea id="e-mensaje" name="mensaje" placeholder="Experiencia previa, rutas que conoces, disponibilidad, etc." maxlength="800"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn" id="empleoSubmit">Enviar postulación →</button>
+    </form>
+  </div>
+
+  </main>
+
+  <footer>
+    <div class="fcopy">© 2014 TS Asesorías Públicas SPA — RUT 76.426.367-7</div>
+    <a href="/" class="fback">← Volver al sitio principal</a>
+  </footer>
+
+  <script is:inline src="/js/maneja.js"></script>
+</BaseLayout>

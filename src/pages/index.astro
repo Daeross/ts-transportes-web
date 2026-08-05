@@ -1,11 +1,42 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Cifras from '../components/Cifras.astro';
+import MapaChile from '../components/MapaChile.astro';
+import Quienes from '../components/Quienes.astro';
+import Servicios from '../components/Servicios.astro';
+import Galeria from '../components/Galeria.astro';
+import OpPanel from '../components/OpPanel.astro';
+import Flota from '../components/Flota.astro';
+import Contacto from '../components/Contacto.astro';
+import Footer from '../components/Footer.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import '../styles/tslogistica.css';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+  title="TSA Logística y Transporte | Transporte de Carga Pesada en Chile"
+  description="TSA Logística y Transporte: empresa chilena de transporte de carga por carretera desde 2014. Carga pesada, maquinaria, contenedores y equipos especiales con flota propia, GPS y seguros en todo Chile."
+  keywords="transporte de carga por carretera, transporte de carga pesada, transporte de maquinaria, transporte de contenedores, transporte especial, logística en Chile, transporte con GPS, transporte para empresas, cama baja, rampla plana"
+  ogDescription="Transporte de carga pesada, maquinaria, contenedores y equipos especiales en todo Chile. Flota propia con GPS y seguros incluidos desde 2014."
+  twitterCard
+>
+  <Nav />
+
+  <main>
+    <Hero />
+    <Cifras />
+    <MapaChile />
+    <Quienes />
+    <Servicios />
+    <Galeria />
+    <OpPanel />
+    <Flota />
+    <Contacto />
+  </main>
+
+  <Footer />
+
+  <script is:inline src="/js/tslogistica.js"></script>
+</BaseLayout>

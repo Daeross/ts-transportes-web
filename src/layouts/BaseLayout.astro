@@ -1,0 +1,94 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  ogImage?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterCard?: boolean;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  ogImage = '/assets/imagenes_optimizadas/logo/logo_TSA.png.png',
+  ogTitle,
+  ogDescription,
+  twitterCard = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
+const absoluteOgImage = new URL(ogImage, Astro.site ?? Astro.url.origin).href;
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Anti-flash: aplica el tema guardado antes de pintar la página -->
+<script is:inline>
+  (function () {
+    try {
+      var stored = localStorage.getItem('tsa-theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+
+<!-- Las cabeceras de seguridad (CSP, nosniff, Referrer-Policy, HSTS…) se sirven
+     como cabeceras HTTP reales desde public/_headers, no como <meta>. -->
+
+<!-- SEO -->
+<title>{title}</title>
+<meta name="description" content={description}>
+{keywords && <meta name="keywords" content={keywords}>}
+<meta name="author" content="TSA Logística y Transporte">
+<meta name="robots" content="index, follow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#06080f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1f7" media="(prefers-color-scheme: light)">
+<meta name="generator" content={Astro.generator}>
+<link rel="canonical" href={canonical}>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:site_name" content="TSA Logística y Transporte">
+<meta property="og:title" content={ogTitle ?? title}>
+<meta property="og:description" content={ogDescription ?? description}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={absoluteOgImage}>
+
+{twitterCard && (
+  <>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={ogTitle ?? title}>
+    <meta name="twitter:description" content={ogDescription ?? description}>
+    <meta name="twitter:image" content={absoluteOgImage}>
+  </>
+)}
+
+<!-- Favicon -->
+<link rel="icon" href="/assets/imagenes_optimizadas/logo/logo_TSA.png.png" type="image/png">
+<link rel="shortcut icon" href="/assets/imagenes_optimizadas/logo/logo_TSA.png.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/imagenes_optimizadas/logo/logo_TSA.png.png">
+
+<!-- Fonts & icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<slot name="head" />
+</head>
+<body>
+<slot />
+</body>
+</html>

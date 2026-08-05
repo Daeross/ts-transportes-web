@@ -22,3 +22,11 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# configuración local de claude code
+.claude/
+
+# respaldo de imágenes sin optimizar que el sitio no usa (~10 MB).
+# Se conservan en disco y en el proyecto original TSWEB; no tiene sentido
+# meterlas en git, donde quedarían para siempre en el historial.
+src/assets/originales/

@@ -1,0 +1,54 @@
+<section id="contacto">
+  <h2 class="stitle">SOLICITA TU <span class="red-word">COTIZACIÓN</span></h2>
+  <p class="contact-lead">¿Necesitas transportar carga pesada, maquinaria o equipos especiales? Cuéntanos tu proyecto y te entregamos una cotización rápida y sin compromisos.</p>
+  <div class="form-wrap">
+    <div>
+      <form class="cform" id="contactForm" novalidate>
+        <div class="frow">
+          <div class="fg" id="fg-nombre">
+            <label for="f-nombre">Nombre</label>
+            <input type="text" id="f-nombre" name="nombre" placeholder="Tu nombre" maxlength="100" autocomplete="name">
+            <span class="field-error">Por favor ingresa tu nombre.</span>
+          </div>
+          <div class="fg" id="fg-empresa">
+            <label for="f-empresa">Empresa</label>
+            <input type="text" id="f-empresa" name="empresa" placeholder="Empresa (opcional)" maxlength="120" autocomplete="organization">
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg" id="fg-telefono">
+            <label for="f-telefono">Teléfono</label>
+            <input type="tel" id="f-telefono" name="telefono" placeholder="+56 9 ..." maxlength="20" autocomplete="tel">
+            <span class="field-error">Ingresa un teléfono válido.</span>
+          </div>
+          <div class="fg" id="fg-correo">
+            <label for="f-correo">Correo</label>
+            <input type="email" id="f-correo" name="correo" placeholder="tu@correo.cl" maxlength="120" autocomplete="email">
+            <span class="field-error">Ingresa un correo válido.</span>
+          </div>
+        </div>
+        <div class="fg" id="fg-servicio">
+          <label for="f-servicio">Tipo de Servicio</label>
+          <select id="f-servicio" name="servicio">
+            <option value="">Selecciona el tipo de carga</option>
+            <option value="maquinaria">Maquinaria pesada (retroexcavadora, cargador frontal, etc.)</option>
+            <option value="construccion">Materiales de construcción</option>
+            <option value="contenedor">Contenedor marítimo</option>
+            <option value="mineria">Equipos de minería</option>
+            <option value="vehiculos">Vehículos</option>
+            <option value="agricola">Equipos agrícolas</option>
+            <option value="conductor">Servicio de conductor</option>
+            <option value="otro">Otro (especificar en mensaje)</option>
+          </select>
+          <span class="field-error">Selecciona un tipo de servicio.</span>
+        </div>
+        <div class="fg">
+          <label for="f-detalle">Detalle del servicio</label>
+          <textarea id="f-detalle" name="detalle" placeholder="Origen, destino, dimensiones aproximadas, fecha requerida..." maxlength="1000"></textarea>
+        </div>
+        <button type="submit" class="fsubmit" id="fsubmit">Enviar Solicitud →</button>
+        <p class="form-note" id="formStatus" role="status" aria-live="polite">Al enviar se abrirá tu cliente de correo con la solicitud lista. Formulario preparado para conexión futura por API o correo.</p>
+      </form>
+    </div>
+  </div>
+</section>

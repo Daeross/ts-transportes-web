@@ -1,0 +1,45 @@
+---
+/* Carrusel infinito de logos de clientes.
+   El set se renderiza dos veces para que el loop no salte (igual que en el sitio original). */
+const BASE = '/assets/imagenes_optimizadas/logo_empresas_externas';
+
+const logos = [
+  { name: 'Sodimac', file: 'sodimac.png.png', alt: 'Sodimac' },
+  { name: 'Atlas Copco', file: 'atlas-copco.png.png', alt: 'Atlas Copco' },
+  { name: 'Komatsu', file: 'komatsu.png.webp', alt: 'Komatsu' },
+  { name: 'Salfa S.A.', file: 'salfa.png.png', alt: 'Salfa S.A.' },
+  { name: 'SKC', file: 'skc.png.png', alt: 'SKC' },
+  { name: 'Gama Leasing', file: 'gamma%20leasing.png.png', alt: 'Gama Leasing' },
+  { name: 'CAP Huachipato', file: 'cap.png.png', alt: 'CAP Huachipato' },
+  { name: 'Lari', file: 'Lari.jpeg.jpg', alt: 'Lari' },
+  { name: 'Gobierno de Chile', file: 'Logo_Gobierno_de_Chile_Simplificado.svg.png.png', alt: 'Gobierno de Chile' },
+  { name: 'Sernageomin', file: 'SERNAGEOMIN.webp.webp', alt: 'Sernageomin' },
+  { name: 'Fuerza Aérea de Chile', file: 'fuerza%20aerea.jpg.jpg', alt: 'Fuerza Aérea de Chile' },
+  { name: 'Armada de Chile', file: 'armada%20de%20chile.jpg.jpg', alt: 'Armada de Chile' },
+  { name: 'Vialidad MOP', file: 'vialidad%20MOP.jpg.jpg', alt: 'Vialidad MOP' },
+  { name: 'Mun. Las Condes', file: 'municipalidad%20de%20las%20condes.jpg.jpg', alt: 'Municipalidad de Las Condes' },
+  { name: 'TTM Chile', file: 'TTM%20CHILE.png.png', alt: 'TTM Chile' },
+  { name: 'Revesol', file: 'revesol.png.png', alt: 'Revesol' },
+  { name: 'Vespek', file: 'vespek.png.png', alt: 'Vespek' },
+  { name: 'Pesco S.A.', file: 'pesco%20sa.png.jpg', alt: 'Pesco S.A.' },
+  { name: 'CCU', file: 'CCu.png.png', alt: 'CCU' },
+  { name: 'Const. San Sebastián', file: 'constructora%20san%20sebastian.png.png', alt: 'Constructora San Sebastián' },
+  { name: 'Transp. Entre Ríos', file: 'entre%20rios.png.png', alt: 'Transp. Entre Ríos' },
+];
+
+const track = [...logos, ...logos];
+---
+
+<div class="hero-logos">
+  <p class="hero-logos-title">Trabajaron con nosotros:</p>
+  <div class="logos-carousel" id="logosCarousel">
+    <div class="logos-track" id="logosTrack">
+      {track.map((logo) => (
+        <div class="logo-slide" data-name={logo.name}>
+          <img loading="lazy" decoding="async" src={`${BASE}/${logo.file}`} alt={logo.alt} />
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="logo-active-name" id="logoActiveName"></div>
+</div>
