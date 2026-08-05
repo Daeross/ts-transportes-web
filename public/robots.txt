@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tstransportes.netlify.app/sitemap.xml
+Sitemap: https://tstransportes.cl/sitemap.xml
