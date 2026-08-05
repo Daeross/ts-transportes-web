@@ -247,51 +247,68 @@
     return valid;
   }
 
-  form.addEventListener('submit', e => {
+  const FORM_IDLE_NOTE = 'Te responderemos a la brevedad. También recibirás una copia de tu solicitud por correo.';
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    fsubmit.disabled    = true;
-    fsubmit.textContent = 'Enviando...';
-
-    /* Safe values — no injection risk since we only display text */
-    const nombre   = escapeHtml(document.getElementById('f-nombre').value.trim());
-    const empresa  = escapeHtml(document.getElementById('f-empresa').value.trim());
-    const telefono = escapeHtml(document.getElementById('f-telefono').value.trim());
-    const correo   = escapeHtml(document.getElementById('f-correo').value.trim());
-    const servicio = escapeHtml(document.getElementById('f-servicio').value);
-    const detalle  = escapeHtml(document.getElementById('f-detalle').value.trim());
-
-    /* Compose mailto — opens default email client */
-    const subject = encodeURIComponent('Solicitud de Cotización — TSA Logística');
-    const body    = encodeURIComponent(
-      'Nombre: ' + nombre + '\n' +
-      (empresa ? 'Empresa: ' + empresa + '\n' : '') +
-      'Teléfono: ' + telefono + '\n' +
-      'Correo: ' + correo + '\n' +
-      'Servicio: ' + servicio + '\n' +
-      (detalle ? '\nDetalle:\n' + detalle : '')
-    );
-
-    window.location.href = 'mailto:tsasesoriaspublicas@outlook.com?subject=' + subject + '&body=' + body;
-
     const status = document.getElementById('formStatus');
 
-    setTimeout(() => {
-      fsubmit.textContent  = '✓ Abriendo tu correo…';
-      fsubmit.style.background = '#1a6b2e';
+    fsubmit.disabled    = true;
+    fsubmit.textContent = 'Enviando...';
+    if (status) status.textContent = 'Enviando tu solicitud…';
+
+    const payload = {
+      nombre:   document.getElementById('f-nombre').value.trim(),
+      empresa:  document.getElementById('f-empresa').value.trim(),
+      telefono: document.getElementById('f-telefono').value.trim(),
+      correo:   document.getElementById('f-correo').value.trim(),
+      servicio: document.getElementById('f-servicio').value,
+      detalle:  document.getElementById('f-detalle').value.trim(),
+      website:  (document.getElementById('f-website') || {}).value || ''
+    };
+
+    function restore(label) {
+      fsubmit.textContent      = label;
+      fsubmit.style.background = '';
+      fsubmit.style.clipPath   = '';
+      fsubmit.disabled         = false;
+    }
+
+    try {
+      const res  = await fetch('/api/cotizacion', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        /* El servidor valida de nuevo: si algo no pasa, marcamos esos campos */
+        if (Array.isArray(data.campos)) data.campos.forEach(id => setError(id, true));
+        throw new Error(data.error || 'envio');
+      }
+
+      fsubmit.textContent       = '✓ Solicitud enviada';
+      fsubmit.style.background  = '#1a6b2e';
       fsubmit.style.clipPath    = 'none';
-      if (status) status.textContent = 'Se abrió tu cliente de correo con la solicitud lista para enviar.';
+      if (status) status.textContent = 'Recibimos tu solicitud. Te enviamos una confirmación a ' + payload.correo + '.';
+
+      form.reset();
+      ['nombre','telefono','correo','servicio'].forEach(id => setError(id, false));
+
       setTimeout(() => {
-        fsubmit.textContent       = 'Enviar Solicitud →';
-        fsubmit.style.background  = '';
-        fsubmit.style.clipPath    = '';
-        fsubmit.disabled          = false;
-        if (status) status.textContent = 'Al enviar se abrirá tu cliente de correo con la solicitud lista. Formulario preparado para conexión futura por API o correo.';
-        form.reset();
-        ['nombre','telefono','correo','servicio'].forEach(id => setError(id, false));
-      }, 3500);
-    }, 800);
+        restore('Enviar Solicitud →');
+        if (status) status.textContent = FORM_IDLE_NOTE;
+      }, 6000);
+    } catch (err) {
+      restore('Reintentar envío →');
+      if (status) {
+        status.textContent = 'No pudimos enviar tu solicitud. Vuelve a intentarlo o escríbenos a ' +
+                             'tsasesoriaspublicas@outlook.com / +56 9 91617552.';
+      }
+    }
   });
 
   /* ── SCROLL REVEAL ── */

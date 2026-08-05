@@ -53,49 +53,64 @@
     return ok;
   }
 
-  form.addEventListener('submit', e => {
+  const statusEl = document.getElementById('empleoStatus');
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!validate()) return;
     submit.disabled = true;
     submit.textContent = 'Enviando...';
+    if (statusEl) statusEl.textContent = 'Enviando tu postulación…';
 
-    const nombre      = document.getElementById('e-nombre').value.trim();
-    const rut         = document.getElementById('e-rut').value.trim();
-    const telefono    = document.getElementById('e-telefono').value.trim();
-    const correo      = document.getElementById('e-correo').value.trim();
-    const licencia    = document.getElementById('e-licencia').value;
-    const experiencia = document.getElementById('e-experiencia').value;
-    const tipo        = document.getElementById('e-tipo').value;
-    const mensaje     = document.getElementById('e-mensaje').value.trim();
+    const payload = {
+      nombre:      document.getElementById('e-nombre').value.trim(),
+      rut:         document.getElementById('e-rut').value.trim(),
+      telefono:    document.getElementById('e-telefono').value.trim(),
+      correo:      document.getElementById('e-correo').value.trim(),
+      licencia:    document.getElementById('e-licencia').value,
+      experiencia: document.getElementById('e-experiencia').value,
+      tipo:        document.getElementById('e-tipo').value,
+      mensaje:     document.getElementById('e-mensaje').value.trim(),
+      website:     (document.getElementById('e-website') || {}).value || ''
+    };
 
-    const subject = encodeURIComponent('Postulación Conductor — TSA Logística');
-    const body    = encodeURIComponent(
-      'POSTULACIÓN CONDUCTOR\n' +
-      '=====================\n' +
-      'Nombre: ' + nombre + '\n' +
-      'RUT: ' + rut + '\n' +
-      'Teléfono: ' + telefono + '\n' +
-      'Correo: ' + correo + '\n' +
-      'Licencia: ' + licencia + '\n' +
-      'Experiencia: ' + experiencia + ' años\n' +
-      (tipo ? 'Tipo de carga: ' + tipo + '\n' : '') +
-      (mensaje ? '\nAcerca del postulante:\n' + mensaje : '')
-    );
+    function restore(label) {
+      submit.textContent      = label;
+      submit.style.background = '';
+      submit.style.clipPath   = '';
+      submit.disabled         = false;
+    }
 
-    window.location.href = 'mailto:tsasesoriaspublicas@outlook.com?subject=' + subject + '&body=' + body;
+    try {
+      const res  = await fetch('/api/postulacion', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
 
-    setTimeout(() => {
-      submit.textContent = '✓ Abriendo tu correo…';
+      if (!res.ok || !data.ok) {
+        if (Array.isArray(data.campos)) data.campos.forEach(id => setErr(id, true));
+        throw new Error(data.error || 'envio');
+      }
+
+      submit.textContent = '✓ Postulación enviada';
       submit.style.background = '#1a6b2e';
       submit.style.clipPath = 'none';
+      if (statusEl) statusEl.textContent = 'Recibimos tu postulación. Te enviamos una confirmación a ' + payload.correo + '.';
+
+      form.reset();
+      ['nombre','rut','telefono','correo','licencia','experiencia'].forEach(id => setErr(id, false));
+
       setTimeout(() => {
-        submit.textContent = 'Enviar postulación →';
-      // (el mailto abre el cliente de correo; no hay envío automático)
-        submit.style.background = '';
-        submit.style.clipPath = '';
-        submit.disabled = false;
-        form.reset();
-        ['nombre','rut','telefono','correo','licencia','experiencia'].forEach(id => setErr(id, false));
-      }, 4000);
-    }, 800);
+        restore('Enviar postulación →');
+        if (statusEl) statusEl.textContent = '';
+      }, 6000);
+    } catch (err) {
+      restore('Reintentar envío →');
+      if (statusEl) {
+        statusEl.textContent = 'No pudimos enviar tu postulación. Vuelve a intentarlo o escríbenos a ' +
+                               'tsasesoriaspublicas@outlook.com.';
+      }
+    }
   });

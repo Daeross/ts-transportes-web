@@ -30,3 +30,6 @@ pnpm-debug.log*
 # Se conservan en disco y en el proyecto original TSWEB; no tiene sentido
 # meterlas en git, donde quedarían para siempre en el historial.
 src/assets/originales/
+
+# variables locales de cloudflare (nunca al repo)
+.dev.vars

@@ -46,8 +46,13 @@
           <label for="f-detalle">Detalle del servicio</label>
           <textarea id="f-detalle" name="detalle" placeholder="Origen, destino, dimensiones aproximadas, fecha requerida..." maxlength="1000"></textarea>
         </div>
+        <!-- Trampa anti-bots: invisible para personas, la rellenan los robots -->
+        <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+          <label for="f-website">No rellenar</label>
+          <input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <button type="submit" class="fsubmit" id="fsubmit">Enviar Solicitud →</button>
-        <p class="form-note" id="formStatus" role="status" aria-live="polite">Al enviar se abrirá tu cliente de correo con la solicitud lista. Formulario preparado para conexión futura por API o correo.</p>
+        <p class="form-note" id="formStatus" role="status" aria-live="polite">Te responderemos a la brevedad. También recibirás una copia de tu solicitud por correo.</p>
       </form>
     </div>
   </div>

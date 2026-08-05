@@ -107,7 +107,13 @@ import '../styles/maneja.css';
           <textarea id="e-mensaje" name="mensaje" placeholder="Experiencia previa, rutas que conoces, disponibilidad, etc." maxlength="800"></textarea>
         </div>
       </div>
+      <!-- Trampa anti-bots: invisible para personas, la rellenan los robots -->
+      <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+        <label for="e-website">No rellenar</label>
+        <input type="text" id="e-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
       <button type="submit" class="submit-btn" id="empleoSubmit">Enviar postulación →</button>
+      <p id="empleoStatus" role="status" aria-live="polite" style="margin-top:14px;font-size:.9rem;color:var(--gray);min-height:1.2em;"></p>
     </form>
   </div>
 
